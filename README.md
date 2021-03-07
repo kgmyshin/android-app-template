@@ -25,10 +25,13 @@
 
 ### Firebase App Distribution のセットアップ
 
-次の手順で、`FIREBASE_TOKEN`を取得して、環境変数に設定しましょう。
+次の手順で、`FIREBASE_TOKEN`を取得して、ローカルマシンの環境変数に設定しましょう。
 
  1. [Firebaseプロジェクトをセットアップ](https://firebase.google.com/docs/android/setup?hl=ja#console)
  2. `app/google-services.json`を上書きする
  3.  [プラグインのログイン操作で Google アカウントにログインする](https://firebase.google.com/docs/app-distribution/android/distribute-gradle?hl=ja#google-acc-gradle) を見て、`FIREBASE_TOKEN`を取得する
  4. `FIREBASE_TOKEN`を環境変数に設定する
 
+### Circle CIのセットアップ
+
+`Firebase App Distribution のセットアップ` で取得した `FIREBASE_TOKEN` を circleci の環境変数に設定しましょう。

@@ -1,0 +1,78 @@
+version: 2.1
+
+executors:
+  android-executor:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-30
+    environment:
+      JVM_OPTS: "-Xmx5g"
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx5g -XX:+HeapDumpOnOutOfMemoryError"'
+      resource_class: xlarge
+
+commands:
+  prepare:
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+
+jobs:
+  build:
+    executor: android-executor
+    steps:
+      - prepare
+      - run:
+          name: Run Assemble & Check & Tests
+          command: ./gradlew assembleDebug check test
+      - store_artifacts:
+          path: app/build/reports
+          destination: reports
+      - store_test_results:
+          path: app/build/test-results
+      - restore_cache:
+          name: Restore bundle cache
+          key: gems-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Run bundle install
+          command: bundle install --path vendor/bundle
+      - save_cache:
+          name: Store bundle cache
+          key: gems-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+      - run:
+          name: Run Danger
+          command: bundle exec danger
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  deploy_debug:
+    executor: android-executor
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: appDistributionUploadDebug
+          command: ./gradlew appDistributionUploadDebug
+
+workflows:
+  version: 2.1
+  build:
+    jobs:
+      - build
+      - deploy_debug:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
