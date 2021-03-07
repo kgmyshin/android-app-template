@@ -34,4 +34,9 @@
 
 ### Circle CIのセットアップ
 
-`Firebase App Distribution のセットアップ` で取得した `FIREBASE_TOKEN` を circleci の環境変数に設定しましょう。
+それぞれ次の環境変数をcircleciに設定しましょう。
+
+| 環境変数名 | 説明 | 取得方法 |
+| --- | --- | --- |
+| FIREBASE_TOKEN | Firebase App Distributionで使用するToken |  `Firebase App Distribution のセットアップ`で取得した FIREBASE_TOKEN です |
+| DANGER_GITHUB_API_TOKEN | DangerがPull-Requestにコメントするために必要なTOken | [SETTING UP AN ACCESS TOKEN](https://danger.systems/guides/getting_started.html#setting-up-an-access-token) |
