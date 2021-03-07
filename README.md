@@ -40,3 +40,7 @@
 | --- | --- | --- |
 | FIREBASE_TOKEN | Firebase App Distributionで使用するToken |  `Firebase App Distribution のセットアップ`で取得した FIREBASE_TOKEN です |
 | DANGER_GITHUB_API_TOKEN | DangerがPull-Requestにコメントするために必要なTOken | [SETTING UP AN ACCESS TOKEN](https://danger.systems/guides/getting_started.html#setting-up-an-access-token) |
+
+### Github Pages のセットアップ
+
+* Settings -> Github Pages で Branch を `main` にして ディレクトリを `root` を選べば、ドキュメントが公開されます。
