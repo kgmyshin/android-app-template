@@ -43,4 +43,4 @@
 
 ### Github Pages のセットアップ
 
-* Settings -> Github Pages で Branch を `main` にして ディレクトリを `root` を選べば、ドキュメントが公開されます。
+* Settings -> Github Pages で Branch を `main` にして ディレクトリを `docs` を選べば、ドキュメントが公開されます。
